@@ -52,6 +52,7 @@ export default class Teardown extends React.Component<object, State> {
   lastEvt = 0;
   lastStep = 0;
   touch: { x: number; y: number } | null = null;
+  zEls: HTMLElement[] = [];
 
   level() {
     return this.state.level;
@@ -133,12 +134,23 @@ export default class Teardown extends React.Component<object, State> {
     return Math.abs(parseFloat(m.slice(9).split(',')[10])) > 0.05;
   }
 
-  // one clock per step, written straight onto the stage box so parent and child layers stay locked frame by frame
+  // the parent and child layers of a camera step — the only two elements that read the clock
+  layerEls(from: number, to: number) {
+    const k = Math.max(from, to);
+    const sel = (n: number) => '.box ' + (n < FIRST_ZOOM ? '.ZA' : '.Z' + n);
+    return [sel(k - 1), sel(k)]
+      .map((s) => this.stageRef.current?.querySelector<HTMLElement>(s))
+      .filter((el): el is HTMLElement => !!el);
+  }
+
+  // one clock per step, written straight onto the two layers it moves so they stay locked frame by frame;
+  // writing it on the stage box instead would restyle every element of every layer on each frame
   runZoomClock(from: number, to: number, reversing: boolean) {
     const box = this.stageRef.current?.querySelector<HTMLElement>('.box');
     if (!box) return;
     if (this.raf) cancelAnimationFrame(this.raf);
     this.raf = 0;
+    box.removeAttribute('data-zoom');
     const fwd = to > from;
     const ratio = ZOOM_RATIO[Math.max(from, to)] || 1;
     const end = fwd ? 1 : 0;
@@ -146,9 +158,17 @@ export default class Teardown extends React.Component<object, State> {
     const begin = reversing && this.zoom ? this.zoom.za : 1 - end;
     const zoom: Zoom | null = camera ? { from, to, za: begin } : null;
     this.zoom = zoom;
+    this.zEls.forEach((el) => {
+      el.style.removeProperty('--za');
+      el.style.removeProperty('--pp');
+    });
+    this.zEls = camera ? this.layerEls(from, to) : [];
     const set = (z: number) => {
-      box.style.setProperty('--za', String(z));
-      box.style.setProperty('--pp', String(Math.pow(ratio, z)));
+      const pp = String(Math.pow(ratio, z));
+      for (const el of this.zEls) {
+        el.style.setProperty('--za', String(z));
+        el.style.setProperty('--pp', pp);
+      }
       if (this.zoom) this.zoom.za = z;
     };
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -158,6 +178,8 @@ export default class Teardown extends React.Component<object, State> {
       if (camera) this.pump();
       return;
     }
+    // while the camera moves, the CSS promotes the two layers to their own GPU layers and pauses decorative loops
+    box.setAttribute('data-zoom', '');
     const hold = !reversing && this.raised(from) ? UNTILT_MS : 0;
     const queued = this.target !== undefined && this.target !== to;
     // one leg of the clock: from a value to the end, over a time, with an ease; rush() swaps in a quicker leg mid-flight
@@ -185,6 +207,7 @@ export default class Teardown extends React.Component<object, State> {
       }
       this.raf = 0;
       this.zoom = null;
+      box.removeAttribute('data-zoom');
       this.pump();
     };
     this.raf = requestAnimationFrame(tick);
@@ -240,8 +263,10 @@ export default class Teardown extends React.Component<object, State> {
     LEVELS.forEach((_, i) => {
       show['s' + i] = i === lv;
     });
-    const z: Record<string, string> = { za: 'ZA ' + (lv < FIRST_ZOOM ? 'is-active' : 'is-past') };
-    for (let k = FIRST_ZOOM; k < LEVELS.length; k++) z['z' + k] = pos(k);
+    // "live" layers are the one on screen and the one just left; the CSS stops painting the rest
+    const live = (on: boolean) => (on ? ' is-live' : '');
+    const z: Record<string, string> = { za: 'ZA ' + (lv < FIRST_ZOOM ? 'is-active' : 'is-past') + live(lv < FIRST_ZOOM || from < FIRST_ZOOM) };
+    for (let k = FIRST_ZOOM; k < LEVELS.length; k++) z['z' + k] = pos(k) + live(k === lv || k === from);
     const fovPos = Math.max(0, Math.min(100, ((1 - Math.log10(LEVELS[lv].m)) / 11) * 100)).toFixed(2);
     const fovVal = LEVELS[lv].fov;
     const num = String(lv + 1).padStart(2, '0');

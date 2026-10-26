@@ -147,6 +147,14 @@ a{color:#F2F2EE}a:hover{color:#B4E35A}
    parent: translate(-off·(pp−1)/(1−s)) scale(pp)        child: translate(off·(1−pp·s)/(1−s)) scale(pp·s) */
 /* defaults = a finished step, so nothing is ever left undefined if the clock has not run yet */
 .box{--za:1;--pp:1}
+/* the clock is written onto the two moving layers themselves; registered as non-inheriting so a new value each frame
+   restyles just those two elements, not every shape inside them (the .box values above stay as a fallback) */
+@property --za{syntax:'<number>';inherits:false;initial-value:1}
+@property --pp{syntax:'<number>';inherits:false;initial-value:1}
+/* layers that are neither on screen nor just left are not painted, and their loops stop */
+.zl:not(.is-live),.ZA:not(.is-live){visibility:hidden;transition:opacity .4s ease,visibility 0s .4s}
+.box:not(.lv-0):not(.from-0) .dc3d{visibility:hidden;transition:transform 1.1s var(--zoom),opacity .9s ease,visibility 0s 2.1s}
+.zl:not(.is-active) *,.ZA:not(.is-active) *,.box:not(.lv-0) .dtg,.box[data-zoom] *{animation-play-state:paused}
 
 /* board ↔ package */
 .lv-4.from-3 .ZA,.lv-3.from-4 .ZA{transition:none;transform:translate(calc(-29.44cqw * (var(--pp) - 1) / .4211),calc(-14.41cqw * (var(--pp) - 1) / .4211)) scale(var(--pp));opacity:clamp(0,calc((1 - var(--za)) / .1),1)}
@@ -359,6 +367,13 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none}
 .caps{height:36px}
 .cap{font-size:20px}
 .viewport{touch-action:none}
+/* phone GPUs: the pulsing glows repaint their whole drawing with a blur filter every frame, so pulse opacity only */
+.tgt{filter:none}
+.dtg{box-shadow:none;animation-name:pulse}
+/* during a camera step the two layers ride on their own GPU layers, so each frame is a move, not a repaint
+   (desktop skips this: a promoted layer is not re-rendered as it grows, and would look soft at 12× there) */
+.box[data-zoom] :is(.zl,.ZA).is-live{will-change:transform,opacity}
+.box[data-zoom] .lod{will-change:opacity}
 .fovb{display:block;position:absolute;right:0;top:0;font:500 11px var(--font-mono),monospace;color:var(--acc);background:#0B0B0C;border:1px solid #2E2E32;padding:4px 8px;z-index:20}
 .hint{display:block;position:absolute;left:0;right:0;bottom:4px;text-align:center;white-space:nowrap;font:500 11px var(--font-mono),monospace;letter-spacing:.06em;color:var(--mut);z-index:20;pointer-events:none;animation:pin .7s 1.2s cubic-bezier(.2,.8,.2,1) both}
 .panel{justify-content:flex-start;-webkit-mask-image:linear-gradient(#000 calc(100% - 28px),transparent);mask-image:linear-gradient(#000 calc(100% - 28px),transparent)}
