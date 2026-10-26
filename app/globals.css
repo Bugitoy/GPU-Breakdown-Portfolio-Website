@@ -19,7 +19,7 @@ a{color:#F2F2EE}a:hover{color:#B4E35A}
 .sel i:last-child{right:-7px;bottom:-7px}
 .viewport{position:relative;flex:1;min-height:0;touch-action:pan-y;container-type:size;overflow:hidden}
 .fovb{display:none}
-.hint{display:none}
+.vhint{display:none}
 
 /* the stage box: a 640×560 world that always fits the viewport; 1cqw = 6.4 world units */
 .box{position:absolute;inset:0;margin:auto;width:min(100cqw,calc(100cqh * 640 / 560));height:min(100cqh,calc(100cqw * 560 / 640));container-type:size}
@@ -266,7 +266,7 @@ a{color:#F2F2EE}a:hover{color:#B4E35A}
 
 /* the copy sits centered on the illustration's viewport (the column minus the 62px caption row);
    a long panel eats the spacer first (huge shrink factor), then shrinks itself and scrolls */
-.panel{position:relative;min-height:0;min-width:0;display:flex;flex-direction:column;justify-content:center}
+.panel{position:relative;min-height:0;min-width:0;display:flex;flex-direction:column;justify-content:center;padding-left:clamp(24px,7vw,150px);box-sizing:border-box}
 .panel::before{content:'';flex:0 1000 62px}
 .pnl{flex:0 1 auto;min-height:0;width:100%;max-width:720px;overflow-y:auto;padding:4px 12px 28px 0;box-sizing:border-box;animation:pin .7s cubic-bezier(.2,.8,.2,1) both;scrollbar-width:none;-ms-overflow-style:none}
 .pnl::-webkit-scrollbar{display:none;width:0;height:0}
@@ -375,8 +375,10 @@ html,body{height:100%;overflow:hidden;overscroll-behavior:none}
 .box[data-zoom] :is(.zl,.ZA).is-live{will-change:transform,opacity}
 .box[data-zoom] .lod{will-change:opacity}
 .fovb{display:block;position:absolute;right:0;top:0;font:500 11px var(--font-mono),monospace;color:var(--acc);background:#0B0B0C;border:1px solid #2E2E32;padding:4px 8px;z-index:20}
-.hint{display:block;position:absolute;left:0;right:0;bottom:4px;text-align:center;white-space:nowrap;font:500 11px var(--font-mono),monospace;letter-spacing:.06em;color:var(--mut);z-index:20;pointer-events:none;animation:pin .7s 1.2s cubic-bezier(.2,.8,.2,1) both}
-.panel{justify-content:flex-start;-webkit-mask-image:linear-gradient(#000 calc(100% - 28px),transparent);mask-image:linear-gradient(#000 calc(100% - 28px),transparent)}
+/* the scene's own hint replaces the panel's "scroll, swipe, or press" line, since scrolling doesn't change layers here */
+.pnl .hint{display:none}
+.vhint{display:block;position:absolute;left:0;right:0;bottom:4px;text-align:center;white-space:nowrap;font:500 11px var(--font-mono),monospace;letter-spacing:.06em;color:var(--mut);z-index:20;pointer-events:none;animation:pin .7s 1.2s cubic-bezier(.2,.8,.2,1) both}
+.panel{padding-left:0;justify-content:flex-start;-webkit-mask-image:linear-gradient(#000 calc(100% - 28px),transparent);mask-image:linear-gradient(#000 calc(100% - 28px),transparent)}
 .panel::before{display:none}
 .pnl{height:100%;max-width:none;padding:8px 0 32px;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .ttl{font-size:32px}

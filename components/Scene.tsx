@@ -1448,8 +1448,8 @@ export default function Scene({ z }: Props) {
             <circle cx="357" cy="219" r="2.5" className="tA" />
             <rect x="10" y="236" width="86" height="22" rx="3" className="bx" />
             <text x="20" y="251" className="tb">Power rail</text>
-            <line x1="10" y1="247" x2="-7" y2="247" className="ld" />
-            <circle cx="-7" cy="247" r="2.5" fill="#F2F2EE" />
+            <line x1="96" y1="247" x2="150" y2="246" className="ld" />
+            <circle cx="150" cy="246" r="2.5" fill="#F2F2EE" />
             <rect x="10" y="451" width="112" height="22" rx="3" className="bx" />
             <text x="20" y="466" className="tb">Standard cells</text>
             <line x1="122" y1="462" x2="180" y2="432" className="ld" />

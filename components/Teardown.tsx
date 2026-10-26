@@ -293,7 +293,7 @@ export default class Teardown extends React.Component<object, State> {
             </div>
             <div className="viewport" onTouchStart={this.onTouchStart} onTouchEnd={this.onTouchEnd}>
               <div className="fovb" aria-hidden="true">FOV {fovVal}</div>
-              {lv === 0 && <div className="hint" aria-hidden="true">Swipe the scene or tap Dissect</div>}
+              {lv === 0 && <div className="vhint" aria-hidden="true">Swipe the scene or tap Dissect</div>}
               <div className={'box lv-' + lv + ' from-' + from + ' dir-' + dir} aria-hidden="true">
                 <Scene z={z} />
               </div>
