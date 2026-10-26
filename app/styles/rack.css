@@ -1,0 +1,53 @@
+/* the stage box: a 640×560 world that always fits the viewport; 1cqw = 6.4 world units */
+.box{position:absolute;inset:0;margin:auto;width:min(100cqw,calc(100cqh * 640 / 560));height:min(100cqh,calc(100cqw * 560 / 640));container-type:size}
+.scene,.ov{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+.dcs{z-index:1}
+.ZA{z-index:2}
+.ov{z-index:3;pointer-events:none;opacity:0;transition:opacity .25s ease}
+.Z4{z-index:4}.Z5{z-index:5}.Z6{z-index:6}.Z7{z-index:7}.Z8{z-index:8}.Z9{z-index:9}
+.art{width:100%;height:100%;display:block;overflow:visible}
+
+/* 0 → 1 · a real 3D rack: the drawer slides out on its rails while the camera dollies over it, then one GPU lifts out */
+.dc3d{position:absolute;inset:0;z-index:1;perspective:200cqw;perspective-origin:50% 50%;transform-origin:48% 52%;transition:transform 1.1s var(--zoom),opacity .9s ease;background:radial-gradient(ellipse 55% 42% at 50% 36%,rgba(140,150,170,.09),transparent 70%)}
+/* the full-bleed scenes (the rack row, logic cells, transistor, atoms) fade out at the stage's edges into the page,
+   instead of stopping at a hard rectangle; labels sit outside the fade so they stay sharp */
+.dc3d,.zart{-webkit-mask-image:linear-gradient(90deg,transparent,rgba(0,0,0,.45) 7%,#000 18%,#000 82%,rgba(0,0,0,.45) 93%,transparent),linear-gradient(transparent,rgba(0,0,0,.5) 6%,#000 16%,#000 70%,rgba(0,0,0,.4) 87%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,rgba(0,0,0,.45) 7%,#000 18%,#000 82%,rgba(0,0,0,.45) 93%,transparent),linear-gradient(transparent,rgba(0,0,0,.5) 6%,#000 16%,#000 70%,rgba(0,0,0,.4) 87%,transparent);mask-composite:intersect}
+.box:not(.lv-0) .dc3d{transform:scale(1.45);opacity:0}
+.from-0:not(.lv-0) .dc3d{transition-delay:1.05s,1.15s}
+.dcdefs{position:absolute;width:0;height:0;overflow:hidden}
+.dw,.drw,.gp,.rz,.rot{position:absolute;left:0;top:0;width:0;height:0;transform-style:preserve-3d}
+.dw{left:50%;top:50%;transform:translate3d(0,0,-87.5cqw) rotateX(-14deg) rotateY(34deg) translate3d(-23.4375cqw,-1.5625cqw,23.4375cqw);transition:transform 1s cubic-bezier(.45,0,.2,1)}
+.box:not(.lv-0) .dw{transform:translate3d(0,0,87.5cqw) rotateX(-56deg) rotateY(-16deg) translate3d(1.25cqw,-4.6875cqw,-17.1875cqw)}
+.lv-0:not(.from-0) .dw{transition-duration:1.2s;transition-delay:1.2s}
+.drw{transform:translate3d(0,3.75cqw,0);transition:transform .85s cubic-bezier(.3,.7,.2,1)}
+.box:not(.lv-0) .drw{transform:translate3d(0,3.75cqw,29.6875cqw)}
+.from-0:not(.lv-0) .drw{transition-delay:.12s}
+.lv-0:not(.from-0) .drw{transition-delay:1.4s}
+.f{position:absolute;box-sizing:border-box}
+.f>svg{width:100%;height:100%;display:block;overflow:visible}
+.rkF{box-shadow:0 0 0 1px #2C2D31}
+.nb{filter:brightness(.55)}
+.rkT{background:linear-gradient(#1B1C1F,#121315);border:1px solid #2C2D31}
+.rkS{background-color:#0C0D0E;background-image:linear-gradient(90deg,rgba(255,255,255,.035),rgba(0,0,0,.25)),repeating-linear-gradient(0deg,transparent 0 1.5625cqw,rgba(255,255,255,.025) 1.5625cqw 1.875cqw);border:1px solid #232428}
+.dfl{background-color:#0D0E10;background-image:linear-gradient(#1C1D21 1px,transparent 1px),linear-gradient(90deg,#1C1D21 1px,transparent 1px);background-size:8.75cqw 8.75cqw;-webkit-mask-image:radial-gradient(closest-side,#000 35%,transparent);mask-image:radial-gradient(closest-side,#000 35%,transparent)}
+.dzF{background:linear-gradient(#24262A,#17181B);border:1px solid #33353A}
+.dzW{background:linear-gradient(#2A2C30,#141517);border:1px solid #3A3B40}
+.dzR{background:linear-gradient(#9A9DA3,#4A4D52)}
+.gpT{background:#0F1412}
+.gpS{background:linear-gradient(#3A3C41,#141517);border:1px solid #4A4C51}
+.hsT{background:repeating-linear-gradient(90deg,#9A9EA5 0 1px,#3A3C41 1px 0.625cqw);border:1px solid #6A6D73}
+.hsS{background:repeating-linear-gradient(90deg,#B5B9BF 0 1px,#55585E 1px 0.625cqw)}
+.dmm{background:linear-gradient(#2E6A4A,#1B3D2B);border-top:2px solid #C9A245}
+.psT{background:linear-gradient(90deg,#2A2B2F,#1E1F22);border:1px solid #3A3B40}
+.psS{background:#16171A;border:1px solid #2E2F33}
+.gs{transition:opacity .05s linear}
+.box:not(.lv-0) .gs{opacity:0}
+.from-0:not(.lv-0) .gs{transition-delay:1.05s}
+.lv-0:not(.from-0) .gs{transition-delay:1.15s}
+.dtg{border:2px solid var(--acc);border-radius:3px;box-shadow:0 0 10px rgba(180,227,90,.55),inset 0 0 8px rgba(180,227,90,.25);animation:pulseb 2.2s ease-in-out infinite;transition:opacity .25s ease}
+.box:not(.lv-0) .dtg{opacity:0}
+.lv-0:not(.from-0) .dtg{transition:opacity .5s ease 2.5s}
+.dcl{position:absolute;inset:0;z-index:1;width:100%;height:100%;overflow:visible;opacity:1;transition:opacity .5s ease .3s}
+.box:not(.lv-0) .dcl{opacity:0;transition:opacity .25s ease}
+.lv-0:not(.from-0) .dcl{transition-delay:2.5s}
+@keyframes pulseb{50%{border-color:rgba(180,227,90,.45);box-shadow:0 0 4px rgba(180,227,90,.2),inset 0 0 4px rgba(180,227,90,.1)}}

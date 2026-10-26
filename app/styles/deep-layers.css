@@ -1,0 +1,83 @@
+/* 4 → 9 · each deep layer is a flat blueprint while the camera zooms (heights squashed, no tilt), so the zoom still
+   lands on matched geometry; once settled it rises into 3D and tilts, and it lies flat again before the next zoom */
+.zart{position:absolute;inset:0;perspective:200cqw;perspective-origin:50% 50%}
+.zs{position:absolute;inset:0;transform-style:preserve-3d;transform-origin:50% 50%;transform:translate3d(0,0,0) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale3d(1,1,.02);transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.zl.is-active .zs{transform:var(--tilt);transition:transform 1.1s cubic-bezier(.2,.7,.2,1) 2.35s}
+.lv-4.from-3 .Z4.is-active .zs{transition-delay:1.85s}
+.Z4{--tilt:translate3d(10.9375cqw,4.6875cqw,0) rotateX(48deg) rotateY(0deg) rotateZ(-26deg) scale3d(0.92,0.92,0.92)}
+.Z7{--tilt:translate3d(0,3.125cqw,0) rotateX(50deg) rotateY(0deg) rotateZ(-20deg) scale3d(1.05,1.05,1.05)}
+.Z8{--tilt:translate3d(1.5625cqw,3.125cqw,0) rotateX(-30deg) rotateY(-28deg) rotateZ(0deg) scale3d(0.76,0.76,0.76)}
+.Z9{--tilt:translate3d(0,3.125cqw,0) rotateX(52deg) rotateY(0deg) rotateZ(-14deg) scale3d(1.35,1.35,1.35)}
+.box .Z5.is-active .lbls,.box .Z6.is-active .lbls,.box .Z5.is-active .tg,.box .Z6.is-active .tg{transition-delay:1.75s}
+.lv-5.from-4 .Z5.is-active .lbls,.lv-6.from-7 .Z6.is-active .lbls,.lv-5.from-4 .Z5.is-active .tg,.lv-6.from-7 .Z6.is-active .tg{transition-delay:2.3s}
+.box .Z5.is-past .tg,.box .Z6.is-past .tg{transition-delay:.5s}
+.zlab,.zbg{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible}
+.zon{opacity:0;transition:opacity .35s ease}
+.zl.is-active .zon{opacity:1;transition:opacity .9s ease 2.45s}
+.zoff{transition:opacity .35s ease}
+.zl.is-active .zoff{opacity:0;transition:opacity .9s ease 2.45s}
+.lv-4.from-3 .Z4.is-active .zon{transition-delay:1.95s}
+.fade{-webkit-mask-image:radial-gradient(closest-side,#000 45%,transparent);mask-image:radial-gradient(closest-side,#000 45%,transparent)}
+.pkT{background-color:#0F1412;background-image:linear-gradient(90deg,rgba(184,118,80,.12) 1px,transparent 1px),linear-gradient(rgba(184,118,80,.12) 1px,transparent 1px);background-size:3.75cqw 3.75cqw;border:1px solid #26332B}
+.pkS{background:repeating-linear-gradient(180deg,#14201A 0 0.4688cqw,#8A5A3C 0.4688cqw 0.5781cqw)}
+.pkE{background:repeating-linear-gradient(90deg,#0D1612 0 0.4688cqw,#5E3E2A 0.4688cqw 0.5781cqw)}
+.sbS{background:repeating-linear-gradient(180deg,#2E3F36 0 0.3438cqw,#B87650 0.3438cqw 0.4531cqw)}
+.sbE{background:repeating-linear-gradient(90deg,#1E2A24 0 0.3438cqw,#7A4E35 0.3438cqw 0.4531cqw)}
+.bgaS{background:radial-gradient(circle,#D4D7DB 0,#8E9298 0.4062cqw,transparent 0.4844cqw) 0 0/1.4062cqw 1.0938cqw,#101411}
+.bgaE{background:radial-gradient(circle,#B4B8BD 0,#6E7277 0.4062cqw,transparent 0.4844cqw) 0 0/1.0938cqw 1.4062cqw,#0B0E0C}
+.stT{background:linear-gradient(135deg,#DADDE1,#B4B8BE);border:1px solid #9DA1A7}
+.stS{background:linear-gradient(#A9ADB3,#73777D)}
+.stE{background:linear-gradient(90deg,#868A90,#55595F)}
+.mbS{background:radial-gradient(circle,#E2E4E8 0,#9A9EA4 0.1719cqw,transparent 0.2187cqw) 0 0/0.5625cqw 0.4688cqw,#22303A}
+.mbE{background:radial-gradient(circle,#C2C5CA 0,#7A7E84 0.1719cqw,transparent 0.2187cqw) 0 0/0.4688cqw 0.5625cqw,#172028}
+.dieS{background:linear-gradient(#3E5C6A,#1E2A33);border-top:1px solid #6FB3C4}
+.dieE{background:linear-gradient(90deg,#2A3B46,#121A20)}
+.m2T{background:linear-gradient(#E6AD84,#B87650)}
+.m2S{background:#7A4A2C}
+.m3T{background:linear-gradient(90deg,#D99A6C,#F0BC93 45%,#B87650)}
+.m3S{background:#8A5534}
+.m3E{background:linear-gradient(90deg,#8A5534,#5A3520)}
+.viS{background:#6E7277}
+
+/* labels arrive after the motion settles */
+.lv-1 .ov1{opacity:1;transition:opacity .5s ease 1.5s}
+.lv-1.from-0 .ov1{transition-delay:2.4s}
+.lv-2 .ov2{opacity:1;transition:opacity .5s ease 1.8s}
+.lv-3 .ov3{opacity:1;transition:opacity .5s ease 1.8s}
+.lv-3.from-4 .ov3{transition-delay:1.9s}
+.zl .lbls{opacity:0;transition:opacity .25s ease}
+.zl.is-active .lbls{opacity:1;transition:opacity .5s ease 3.2s}
+.lv-4.from-3 .Z4.is-active .lbls{transition-delay:2.7s}
+/* the green target stays on screen as the camera starts pushing into it */
+.zl .tg{opacity:0;transition:opacity .3s ease}
+.zl.is-active .tg{opacity:1;transition:opacity .5s ease 3.2s}
+.lv-4.from-3 .Z4.is-active .tg{transition-delay:2.7s}
+.zl.is-past .tg{opacity:0;transition:opacity .4s ease .95s}
+
+.tl{font:700 12px var(--font-poppins),sans-serif;letter-spacing:.14em;fill:#F2F2EE}
+.ts{font:400 10.5px var(--font-mono),monospace;fill:#A3A39E}
+.tb{font:500 11px var(--font-mono),monospace;fill:#F2F2EE}
+.tin{font:500 9.5px var(--font-mono),monospace;fill:#ECECE7}
+.tt{font:600 6px var(--font-mono),monospace;fill:#1E251C;text-anchor:middle}
+.tm{text-anchor:middle}.te{text-anchor:end}
+.tA{fill:var(--acc)}
+.ld{fill:none;stroke:#D6D6D2;stroke-width:1}
+.ldA{fill:none;stroke:var(--acc);stroke-width:1.2}
+.dim{fill:none;stroke:#85857F;stroke-width:1}
+.bx{fill:#0B0B0C;stroke:#45454A}
+.bxA{fill:#0B0B0C;stroke:var(--acc)}
+.tgt{fill:none;stroke:var(--acc);stroke-width:2;filter:drop-shadow(0 0 6px rgba(180,227,90,.55));animation:pulse 2.2s ease-in-out infinite}
+.eo{fill-rule:evenodd}
+.sw15{stroke-width:1.5}.sw2{stroke-width:2}.sw3{stroke-width:3}
+.cb{fill:none;stroke:#26282C;stroke-width:3;stroke-linecap:round}
+.rail{fill:none;stroke:#55585E;stroke-width:2}
+.hp{fill:none;stroke:#7E8187;stroke-width:6;stroke-linecap:round}
+.hph{fill:none;stroke:#B3B6BC;stroke-width:1.2;stroke-linecap:round;opacity:.7}
+.xf{fill:none;stroke:#7A756F;stroke-width:7;stroke-linecap:round}
+.xfh{fill:none;stroke:#A9A39B;stroke-width:1.5;stroke-linecap:round}
+.ring{fill:none;stroke:#3E4045;stroke-width:1}
+.bond{fill:none;stroke:#4D5157;stroke-width:3;stroke-linecap:round}
+.spin{animation:spin 2.4s linear infinite;transform-box:fill-box;transform-origin:center}
+.blink{animation:blink 1.4s steps(2) infinite}
+.e{animation:flow 3.2s linear infinite}.e2{animation-delay:-.55s}.e3{animation-delay:-1.1s}.e4{animation-delay:-1.65s}.e5{animation-delay:-2.2s}.e6{animation-delay:-2.75s}
+.glow{animation:glow 2.6s ease-in-out infinite}.g2{animation-delay:-.5s}.g3{animation-delay:-1s}.g4{animation-delay:-1.5s}.g5{animation-delay:-2s}

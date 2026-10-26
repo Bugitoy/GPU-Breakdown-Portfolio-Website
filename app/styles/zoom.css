@@ -1,0 +1,61 @@
+/* 3 → 9 · matched-geometry zooms: each layer starts exactly inside its parent's highlighted part */
+.zl{position:absolute;inset:0;transform-origin:0 0;opacity:0}
+.zl,.ZA{transition:opacity .4s ease}
+.zl.is-active,.ZA.is-active{opacity:1;transform:translate(0cqw,0cqw) scale(1)}
+/* --z drives the incoming layer, --zp the outgoing one; both run on the same clock so they stay locked */
+.zl.is-next{--z:0}
+.zl.is-active,.zl.is-past{--z:1}
+.zl.is-past,.ZA.is-past{--zp:1}
+.zl{--kc:clamp(0,calc((1 - var(--z)) / .28),1)}
+/* level of detail: a deep layer opens on an exact copy of its parent's region, then dissolves into its own structure mid-zoom */
+.lod{opacity:clamp(0,calc((.62 - var(--z)) / .42),1)}
+.ZA.is-past{opacity:0;transform:translate(-50.84cqw,-24.89cqw) scale(1.7274)}
+.Z4.is-next{transform:translate(29.44cqw,14.41cqw) scale(.5789)}
+.Z4.is-past{transform:translate(-55.73cqw,-60.01cqw) scale(3.2223)}
+.Z5.is-next{transform:translate(17.3cqw,18.62cqw) scale(.31034)}
+.Z5.is-past{transform:translate(-467.75cqw,-205.55cqw) scale(12.2727)}
+.Z6.is-next{transform:translate(38.11cqw,16.75cqw) scale(.081482)}
+.Z6.is-past{transform:translate(-420.91cqw,-201.95cqw) scale(11.5628)}
+.Z7.is-next{transform:translate(36.4cqw,17.47cqw) scale(.086484)}
+.Z7.is-past{transform:translate(-128.57cqw,-113.39cqw) scale(3.8095)}
+.Z8.is-next{transform:translate(33.75cqw,29.77cqw) scale(.2625)}
+.Z8.is-past{transform:translate(-178.57cqw,-216.96cqw) scale(4.5714)}
+.Z9.is-next{transform:translate(39.06cqw,47.46cqw) scale(.21875)}
+
+/* steady-pace camera zooms between neighbouring layers. The script runs one clock on .box per step:
+   --za goes 0→1 (forward) or 1→0 (back), and --pp = (1/s)^za, so scale grows geometrically and every moment feels like the same push-in.
+   parent: translate(-off·(pp−1)/(1−s)) scale(pp)        child: translate(off·(1−pp·s)/(1−s)) scale(pp·s) */
+/* defaults = a finished step, so nothing is ever left undefined if the clock has not run yet */
+.box{--za:1;--pp:1}
+/* the clock is written onto the two moving layers themselves; registered as non-inheriting so a new value each frame
+   restyles just those two elements, not every shape inside them (the .box values above stay as a fallback) */
+@property --za{syntax:'<number>';inherits:false;initial-value:1}
+@property --pp{syntax:'<number>';inherits:false;initial-value:1}
+/* layers that are neither on screen nor just left are not painted, and their loops stop */
+.zl:not(.is-live),.ZA:not(.is-live){visibility:hidden;transition:opacity .4s ease,visibility 0s .4s}
+.box:not(.lv-0):not(.from-0) .dc3d{visibility:hidden;transition:transform 1.1s var(--zoom),opacity .9s ease,visibility 0s 2.1s}
+.zl:not(.is-active) *,.ZA:not(.is-active) *,.box:not(.lv-0) .dtg,.box[data-zoom] *{animation-play-state:paused}
+
+/* board ↔ package */
+.lv-4.from-3 .ZA,.lv-3.from-4 .ZA{transition:none;transform:translate(calc(-29.44cqw * (var(--pp) - 1) / .4211),calc(-14.41cqw * (var(--pp) - 1) / .4211)) scale(var(--pp));opacity:clamp(0,calc((1 - var(--za)) / .1),1)}
+.lv-4.from-3 .Z4,.lv-3.from-4 .Z4{--z:var(--za);transition:none;transform:translate(calc(29.44cqw * (1 - var(--pp) * .5789) / .4211),calc(14.41cqw * (1 - var(--pp) * .5789) / .4211)) scale(calc(var(--pp) * .5789));opacity:clamp(0,calc(var(--za) * 3),1);clip-path:inset(calc(15.36% * var(--kc)) calc(49.38% * var(--kc)) calc(43.93% * var(--kc)) calc(15% * var(--kc)))}
+
+/* package ↔ die */
+.lv-5.from-4 .Z4,.lv-4.from-5 .Z4{transition:none;transform:translate(calc(-17.3cqw * (var(--pp) - 1) / .68966),calc(-18.62cqw * (var(--pp) - 1) / .68966)) scale(var(--pp));opacity:clamp(0,calc((1 - var(--za)) / .1),1)}
+.lv-5.from-4 .Z5,.lv-4.from-5 .Z5{--z:var(--za);transition:none;transform:translate(calc(17.3cqw * (1 - var(--pp) * .31034) / .68966),calc(18.62cqw * (1 - var(--pp) * .31034) / .68966)) scale(calc(var(--pp) * .31034));opacity:clamp(0,calc(var(--za) * 3),1);clip-path:inset(calc(5.36% * var(--kc)) calc(4.69% * var(--kc)) calc(12.5% * var(--kc)) calc(4.69% * var(--kc)))}
+
+/* die ↔ SM */
+.lv-6.from-5 .Z5,.lv-5.from-6 .Z5{transition:none;transform:translate(calc(-38.11cqw * (var(--pp) - 1) / .918518),calc(-16.75cqw * (var(--pp) - 1) / .918518)) scale(var(--pp));opacity:clamp(0,calc((1 - var(--za)) / .1),1)}
+.lv-6.from-5 .Z6,.lv-5.from-6 .Z6{--z:var(--za);transition:none;transform:translate(calc(38.11cqw * (1 - var(--pp) * .081482) / .918518),calc(16.75cqw * (1 - var(--pp) * .081482) / .918518)) scale(calc(var(--pp) * .081482));opacity:clamp(0,calc(var(--za) * 14),1);clip-path:inset(calc(1.79% * var(--kc)) calc(30.83% * var(--kc)) calc(1.79% * var(--kc)) calc(30.83% * var(--kc)))}
+
+/* SM ↔ logic cells */
+.lv-7.from-6 .Z6,.lv-6.from-7 .Z6{transition:none;transform:translate(calc(-36.4cqw * (var(--pp) - 1) / .913516),calc(-17.47cqw * (var(--pp) - 1) / .913516)) scale(var(--pp));opacity:clamp(0,calc((1 - var(--za)) / .1),1)}
+.lv-7.from-6 .Z7,.lv-6.from-7 .Z7{--z:var(--za);transition:none;transform:translate(calc(36.4cqw * (1 - var(--pp) * .086484) / .913516),calc(17.47cqw * (1 - var(--pp) * .086484) / .913516)) scale(calc(var(--pp) * .086484));opacity:clamp(0,calc(var(--za) * 14),1);clip-path:inset(calc(.4% * var(--kc)) 0 calc(.4% * var(--kc)) 0)}
+
+/* logic cells ↔ transistor */
+.lv-8.from-7 .Z7,.lv-7.from-8 .Z7{transition:none;transform:translate(calc(-33.75cqw * (var(--pp) - 1) / .7375),calc(-29.77cqw * (var(--pp) - 1) / .7375)) scale(var(--pp));opacity:clamp(0,calc((1 - var(--za)) / .1),1)}
+.lv-8.from-7 .Z8,.lv-7.from-8 .Z8{--z:var(--za);transition:none;transform:translate(calc(33.75cqw * (1 - var(--pp) * .2625) / .7375),calc(29.77cqw * (1 - var(--pp) * .2625) / .7375)) scale(calc(var(--pp) * .2625));opacity:clamp(0,calc(var(--za) * 14),1);clip-path:inset(calc(1% * var(--kc)) 0 calc(1% * var(--kc)) 0)}
+
+/* transistor ↔ atoms */
+.lv-9.from-8 .Z8,.lv-8.from-9 .Z8{transition:none;transform:translate(calc(-39.06cqw * (var(--pp) - 1) / .78125),calc(-47.46cqw * (var(--pp) - 1) / .78125)) scale(var(--pp));opacity:clamp(0,calc((1 - var(--za)) / .1),1)}
+.lv-9.from-8 .Z9,.lv-8.from-9 .Z9{--z:var(--za);transition:none;transform:translate(calc(39.06cqw * (1 - var(--pp) * .21875) / .78125),calc(47.46cqw * (1 - var(--pp) * .21875) / .78125)) scale(calc(var(--pp) * .21875));opacity:clamp(0,calc(var(--za) * 14),1);clip-path:inset(calc(29.6% * var(--kc)) calc(2.86% * var(--kc)) calc(29.6% * var(--kc)) calc(2.86% * var(--kc)))}

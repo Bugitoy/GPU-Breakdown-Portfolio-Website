@@ -1,0 +1,42 @@
+/* 1 → 3 · the card as real 3D parts: a PCB with thickness, a standing I/O bracket, heatpipes, individual fins, bladed fans, a shroud with depth */
+.ZA{position:absolute;inset:0;transform-origin:0 0;perspective:200cqw;perspective-origin:50% 50%}
+.card3d{position:absolute;left:4.6875%;top:25%;width:90.625%;height:50%;transform-style:preserve-3d;transform-origin:50% 50%;opacity:0;transform:translate3d(0,0,87.5cqw) rotateX(-56deg) rotateY(-16deg) translate3d(5cqw,1.0938cqw,2.8125cqw) rotateX(90deg) rotateZ(90deg) scale3d(0.16,0.16,0.16);transition:transform 1.2s var(--zoom),opacity .08s linear}
+.lv-0:not(.from-0) .card3d{transition-delay:0s,1.15s}
+.box:not(.lv-0) .card3d{opacity:1}
+.lv-1 .card3d{transform:translate3d(0,0,0) rotateX(0deg) rotateY(0deg) translate3d(0,0,0) rotateX(0deg) rotateZ(0deg) scale3d(0.96,0.96,0.96);transition-delay:.45s,0s}
+.lv-2 .card3d{transform:translate3d(0,14.375cqw,0) rotateX(0deg) rotateY(0deg) translate3d(0,0,0) rotateX(62deg) rotateZ(-32deg) scale3d(0.54,0.54,0.54);transition-duration:1.3s,.08s;transition-delay:0s,0s}
+.lv-3 .card3d,.lv-4 .card3d,.lv-5 .card3d,.lv-6 .card3d,.lv-7 .card3d,.lv-8 .card3d,.lv-9 .card3d{transform:translate3d(0,-5.47cqw,0) rotateX(0deg) rotateY(0deg) translate3d(0,0,0) rotateX(0deg) rotateZ(0deg) scale3d(1.2308,1.2308,1.2308);transition-duration:1.2s,.08s;transition-delay:.5s,0s}
+.from-0:not(.lv-0) .card3d{transition-duration:1.3s,.08s;transition-delay:1.05s,1.05s}
+.pl{position:absolute;inset:0;transform-style:preserve-3d;transition:transform 1s var(--zoom),opacity .5s ease}
+.pl svg{width:100%;height:100%;display:block;overflow:visible}
+.pl .sv{position:absolute;left:0;top:0}
+.p-pcb,.p-br{transform:translateY(0cqw) translateZ(0cqw)}
+.p-vc{transform:translateY(0cqw) translateZ(0.9375cqw)}
+.p-fin{transform:translateY(0cqw) translateZ(6.875cqw)}
+.p-fan{transform:translateY(0cqw) translateZ(9.0625cqw)}
+.p-sh{transform:translateY(0cqw) translateZ(9.6875cqw)}
+.lv-2 .p-vc{transform:translateY(0cqw) translateZ(12.6562cqw);transition-delay:.6s}
+.lv-2 .p-fin{transform:translateY(0cqw) translateZ(42.0312cqw);transition-delay:.5s}
+.lv-2 .p-fan{transform:translateY(0cqw) translateZ(66.0938cqw);transition-delay:.4s}
+.lv-2 .p-sh{transform:translateY(0cqw) translateZ(80.7812cqw);transition-delay:.3s}
+.lv-2.from-3 .p-vc{transition-delay:.35s}.lv-2.from-3 .p-fin{transition-delay:.45s}.lv-2.from-3 .p-fan{transition-delay:.55s}.lv-2.from-3 .p-sh{transition-delay:.65s}
+.box:is(.lv-3,.lv-4,.lv-5,.lv-6,.lv-7,.lv-8,.lv-9) :is(.p-br,.p-vc,.p-fin,.p-fan,.p-sh){transform:translateY(-120cqw) translateZ(30cqw);opacity:0;transition-duration:.9s,.5s}
+.lv-3 .p-fan{transition-delay:.08s}.lv-3 .p-fin{transition-delay:.16s}.lv-3 .p-vc,.lv-3 .p-br{transition-delay:.24s}
+.pcbE{background:linear-gradient(#2B4436,#0F1A14)}
+.pcbB{background:#0B100D;border:1px solid #1E2A23;border-radius:0.625cqw}
+.brP{background:linear-gradient(90deg,#55585E,#8E9197 40%,#6E7177)}
+.brT{background:linear-gradient(#9A9DA3,#6E7177)}
+.vcE{background:linear-gradient(#5E6168,#2E3034)}
+.hpV{background:linear-gradient(#C7CACF,#7E8187 45%,#3E4146);border-radius:0.4688cqw}
+.fin{background:linear-gradient(90deg,#CDD1D6 0,#959AA1 14%,#5F636A 60%,#3C3F44 100%);border-left:1px solid #E6E9ED}
+.cuH{background:linear-gradient(#E0A57A,#B87650 50%,#7A4A2C);border-radius:0.4688cqw}
+.cuV{background:linear-gradient(#D69A6E,#8A5534);border-radius:0.4688cqw}
+.frR{background:linear-gradient(#3A3C41,#17181B);border-left:1px solid #4A4C51;border-right:1px solid #101113}
+.hubR{background:linear-gradient(#4A4D53,#202226)}
+.bd{position:absolute;left:0;top:-7.0312cqw;width:18.75cqw;height:9.375cqw;transform-origin:0 7.0312cqw}
+.bdp{fill:#454950;stroke:#6A6E75;stroke-width:1.2}
+.rot{animation:rot 2.4s linear infinite}
+.shs{stroke-width:1.5}
+@keyframes rot{to{transform:rotateZ(360deg)}}
+.pcbtgt{opacity:0;transition:opacity .3s}
+.lv-2 .pcbtgt{opacity:1;transition:opacity .5s 1.6s}
