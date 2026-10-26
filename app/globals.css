@@ -19,6 +19,7 @@ a{color:#F2F2EE}a:hover{color:#B4E35A}
 .sel i:last-child{right:-7px;bottom:-7px}
 .viewport{position:relative;flex:1;min-height:0;touch-action:pan-y;container-type:size;overflow:hidden}
 .fovb{display:none}
+.hint{display:none}
 
 /* the stage box: a 640×560 world that always fits the viewport; 1cqw = 6.4 world units */
 .box{position:absolute;inset:0;margin:auto;width:min(100cqw,calc(100cqh * 640 / 560));height:min(100cqh,calc(100cqw * 560 / 640));container-type:size}
@@ -346,20 +347,36 @@ a{color:#F2F2EE}a:hover{color:#B4E35A}
 @media (max-width:1280px){.legend{display:none}.bot{grid-template-columns:minmax(0,1fr) auto}.dots{justify-self:start}}
 @media (max-width:1180px){.main{grid-template-columns:minmax(0,1fr) minmax(340px,1.35fr) 80px;gap:18px;padding:0 18px 0 24px}.pnl{max-width:640px}.cap{font-size:28px}.ttl{font-size:40px}}
 @media (max-width:980px){
-.stage{height:auto;min-height:100vh;overflow:visible}
-.top{padding:12px 16px}
-.main{grid-template-columns:minmax(0,1fr);gap:8px;padding:0 16px}
+/* phones and tablets: one fixed screen, no page scroll — the scene sits on top, the copy scrolls inside its own
+   panel, and layers change only through Back / Dissect or a swipe on the scene itself */
+html,body{height:100%;overflow:hidden;overscroll-behavior:none}
+.stage{height:100vh;height:100dvh;min-height:0}
+.top{padding:10px 16px;gap:0 12px}
+.brand span{display:none}
+.links a{min-height:36px;padding:0 8px;font-size:12px}
+.main{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(220px,46%) minmax(0,1fr);gap:4px;padding:0 16px}
 .fov{display:none}
-.viz{height:56vh;min-height:360px}
-.caps{height:44px}
-.cap{font-size:22px}
+.caps{height:36px}
+.cap{font-size:20px}
+.viewport{touch-action:none}
 .fovb{display:block;position:absolute;right:0;top:0;font:500 11px var(--font-mono),monospace;color:var(--acc);background:#0B0B0C;border:1px solid #2E2E32;padding:4px 8px;z-index:20}
+.hint{display:block;position:absolute;left:0;right:0;bottom:4px;text-align:center;white-space:nowrap;font:500 11px var(--font-mono),monospace;letter-spacing:.06em;color:var(--mut);z-index:20;pointer-events:none;animation:pin .7s 1.2s cubic-bezier(.2,.8,.2,1) both}
+.panel{justify-content:flex-start;-webkit-mask-image:linear-gradient(#000 calc(100% - 28px),transparent);mask-image:linear-gradient(#000 calc(100% - 28px),transparent)}
 .panel::before{display:none}
-.pnl{height:auto;overflow:visible;max-width:none;padding:8px 0 24px}
-.ttl{font-size:36px}
+.pnl{height:100%;max-width:none;padding:8px 0 32px;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.ttl{font-size:32px}
 .stat b{font-size:24px}
-.bot{position:sticky;bottom:0;z-index:30;grid-template-columns:auto minmax(0,1fr);padding:10px 16px;background:rgba(11,11,12,.95);border-top:1px solid var(--line)}
+.bot{grid-template-columns:auto minmax(0,1fr);padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(11,11,12,.95);border-top:1px solid var(--line)}
 .legend,.dots{display:none}
 .cnt{display:block}
+}
+/* landscape phones: too short to stack, so the scene and the copy sit side by side */
+@media (max-width:980px) and (orientation:landscape) and (max-height:560px){
+.top{padding:6px 16px}
+.main{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:16px}
+.caps{height:30px}
+.cap{font-size:16px}
+.ttl{font-size:26px}
+.bot{padding:6px 16px calc(6px + env(safe-area-inset-bottom))}
 }
 @media (prefers-reduced-motion:reduce){.zl,.ZA,.lod,.zs,.zon,.zoff,.card3d,.pl,.dc3d,.dw,.drw,.gs,.dcl,.dtg,.ov,.cap,.mark{transition-duration:.01s!important;transition-delay:0s!important}.spin,.rot,.dtg,.blink,.e,.glow,.tgt,.pnl{animation:none}.zl,.ZA{animation:none!important}}
